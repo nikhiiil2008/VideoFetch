@@ -25,3 +25,18 @@ Open `index.html` in a browser, or serve this folder with any static web server.
 5. Wait for GitHub Pages to publish the site.
 
 The public site will be available at `https://nikhiiil2008.github.io/VideoFetch/` after Pages is enabled.
+
+
+## Vercel backend scaffold
+
+This repository now includes a minimal Vercel serverless API:
+- `/api/health` returns a JSON health status.
+- `vercel.json` configures the API function runtime.
+
+### Deploy the backend
+1. Import `nikhiiil2008/VideoFetch` into Vercel.
+2. Keep the project root set to the repository root.
+3. Deploy.
+4. Open `https://YOUR-VERCEL-DOMAIN/api/health` and confirm it returns JSON with `"ok": true`.
+
+This scaffold is infrastructure only. It does not extract media from third-party webpage URLs, classify a site's free/premium catalogue, or bypass access controls. Add integrations only for sources that explicitly permit downloading and provide a supported method.
