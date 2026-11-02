@@ -6,7 +6,6 @@ const preview = document.getElementById('preview');
 const downloadBtn = document.getElementById('downloadBtn');
 const fileName = document.getElementById('fileName');
 const fileType = document.getElementById('fileType');
-const supportedExtensions = /\\.(mp4|webm|ogg|mov|m4v)$/i;
 
 document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -38,45 +37,40 @@ function startFetch() {
   message('');
 
   if (!url) {
-    message('Please enter a valid http:// or https:// video URL.');
+    message('Enter a valid http:// or https:// URL.');
     input.focus();
     return;
   }
 
-  // Check the actual URL path, not query parameters that may contain ".mp4".
-  if (!supportedExtensions.test(url.pathname)) {
-    message('This is a webpage link, not a direct video file. Paste a direct .mp4, .webm, .ogg, .mov or .m4v link.');
-    return;
-  }
-
   fetchBtn.disabled = true;
-  fetchBtn.textContent = 'Checking…';
+  fetchBtn.textContent = 'Checking video…';
   preview.src = url.href;
 
   preview.onloadedmetadata = () => {
     fetchBtn.disabled = false;
     fetchBtn.innerHTML = 'Find video <span>→</span>';
 
-    const rawName = url.pathname.split('/').pop() || 'video-file';
-    let name = rawName;
-    try { name = decodeURIComponent(rawName); } catch { /* Keep the encoded name. */ }
+    const lastPart = url.pathname.split('/').filter(Boolean).pop() || 'video';
+    let name = lastPart;
+    try { name = decodeURIComponent(lastPart); } catch { /* Keep original text. */ }
+    if (!/\.(mp4|webm|ogg|mov|m4v)$/i.test(name)) name += '.mp4';
 
     fileName.textContent = name;
     fileType.textContent = preview.videoWidth && preview.videoHeight
-      ? preview.videoWidth + ' × ' + preview.videoHeight + ' · Video file'
-      : 'Video file';
+      ? preview.videoWidth + ' × ' + preview.videoHeight + ' · Direct video'
+      : 'Direct video file';
 
     downloadBtn.href = url.href;
     downloadBtn.setAttribute('download', name);
     result.classList.remove('hidden');
-    message('Video loaded. Preview it, then download if you have permission.', true);
+    message('Playable video detected. Download availability depends on the host.', true);
   };
 
   preview.onerror = () => {
     fetchBtn.disabled = false;
     fetchBtn.innerHTML = 'Find video <span>→</span>';
     resetResult();
-    message('The video could not be opened. The host may block browser playback, require authorization, or the link may have expired.');
+    message('No playable direct video was detected. This may be a webpage link, an expired URL, or a host-restricted stream.');
   };
 }
 
