@@ -17,11 +17,11 @@
     <section class="hero">
       <div class="eyebrow"><span></span> YOUR VIDEO, YOUR WAY</div>
       <h1>Download videos.<br><span>Keep what matters.</span></h1>
-      <p class="intro">Paste a direct video link below to preview and save it in its available original quality.</p>
+      <p class="intro">Paste a direct video-file link to preview and save it when the host permits downloading.</p>
       <section class="download-card">
         <label for="videoUrl">VIDEO URL</label>
         <div class="url-row"><span class="link-icon">↗</span><input id="videoUrl" type="url" placeholder="https://example.com/video.mp4" autocomplete="url"><button id="fetchBtn" class="fetch-btn">Find video <span>→</span></button></div>
-        <p class="hint">Supports direct video file links such as MP4 and WebM.</p>
+        <p class="hint">Supports direct video URLs, including signed links without a file extension. Webpage links are not supported.</p>
         <div id="status" class="status" role="status" aria-live="polite"></div>
         <div id="result" class="result hidden">
           <div class="preview-wrap"><video id="preview" controls playsinline></video></div>
@@ -31,7 +31,7 @@
       </section>
       <div class="features"><div><span class="feature-icon">↗</span><b>Direct links</b><small>Paste a video file URL</small></div><div><span class="feature-icon">◉</span><b>Preview first</b><small>Check before saving</small></div><div><span class="feature-icon">⬇</span><b>Original quality</b><small>No fake quality choices</small></div></div>
     </section>
-    <section class="notice"><span>ⓘ</span><p><b>Good to know</b><br>VideoFetch currently works with direct media-file URLs that allow access. It does not extract videos from YouTube, social platforms, private pages, or DRM-protected streams. Only download content you own or have permission to save.</p></section>
+    <section class="notice"><span>ⓘ</span><p><b>Good to know</b><br>VideoFetch tests whether a URL serves a playable video file. It does not extract videos from webpage links or bypass login, premium, DRM, or host download restrictions. Only save content you own or are authorized to download.</p></section>
   </main>
   <footer>© <span id="year"></span> VideoFetch <span>Made for easy downloads.</span></footer>
   <script src="app.js"></script>
